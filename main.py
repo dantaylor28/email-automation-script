@@ -12,3 +12,10 @@ def connect_to_mail():
     mail.login(username, password)
     mail.select("inbox")
     return mail
+
+def search_for_email():
+    mail = connect_to_mail()
+    _, search_data = mail.search(None, '(BODY "unsubscribe")')
+
+
+    mail.logout()
