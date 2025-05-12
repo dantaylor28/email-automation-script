@@ -16,6 +16,9 @@ def connect_to_mail():
 def search_for_email():
     mail = connect_to_mail()
     _, search_data = mail.search(None, '(BODY "unsubscribe")')
+    data = search_data[0].split()
 
+    for num in data:
+        _, data = mail.fetch(num, "(RFC822)")
 
     mail.logout()
