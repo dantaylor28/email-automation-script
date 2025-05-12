@@ -20,5 +20,6 @@ def search_for_email():
 
     for num in data:
         _, data = mail.fetch(num, "(RFC822)")
+        msg = email.message_from_bytes(data[0][1])
 
     mail.logout()
