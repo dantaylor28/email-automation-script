@@ -22,4 +22,9 @@ def search_for_email():
         _, data = mail.fetch(num, "(RFC822)")
         msg = email.message_from_bytes(data[0][1])
 
+        if msg.is_multipart():
+            for part in msg.walk():
+                if part.get_content_type() == "text/html":
+                    html_content = part.get_payload(decode=True).decode()
+
     mail.logout()
