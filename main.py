@@ -26,5 +26,13 @@ def search_for_email():
             for part in msg.walk():
                 if part.get_content_type() == "text/html":
                     html_content = part.get_payload(decode=True).decode()
+                    print(html_content)
+        else:
+            content_type = msg.get_content_type()
+            content = msg.get_payload(decode=True).decode()
 
+            if content_type == "text/html":
+                print(content)
     mail.logout()
+
+search_for_email()
