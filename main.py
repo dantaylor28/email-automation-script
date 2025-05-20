@@ -24,6 +24,8 @@ def search_for_email():
     _, search_data = mail.search(None, '(BODY "unsubscribe")')
     data = search_data[0].split()
 
+    links = []
+
     for num in data:
         _, data = mail.fetch(num, "(RFC822)")
         msg = email.message_from_bytes(data[0][1])
@@ -37,7 +39,7 @@ def search_for_email():
                         html_content = payload.decode(charset or 'utf-8')
                     except UnicodeDecodeError:
                         html_content = payload.decode('latin-1')  # fallback
-                    print(html_content)
+                    links.extend(extract_links_from_html(html_content))
         else:
             content_type = msg.get_content_type()
             payload = msg.get_payload(decode=True)
@@ -47,9 +49,10 @@ def search_for_email():
             except UnicodeDecodeError:
                 content = payload.decode('latin-1')
             if content_type == "text/html":
-                print(content)
+                links.extend(extract_links_from_html(content))
 
     mail.logout()
+    return links
 
 
 search_for_email()
