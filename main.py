@@ -55,4 +55,5 @@ def search_for_email():
     return links
 
 
-search_for_email()
+links = search_for_email()
+print(links)
